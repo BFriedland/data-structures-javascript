@@ -1,4 +1,8 @@
 
+// Contains a LinkedList class for constructing
+// linked lists out of Node objects.
+// This has nothing to do with Node.js or <li> HTML tags.
+
 // Reference:
 // https://developer.mozilla.org/
 //     en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript
@@ -39,6 +43,28 @@ function LinkedList()
         this.val = null;
         this.next_node = null;
 
+        // This method recursively finds and returns the first
+        // Node encountered in the LinkedList with the supplied
+        // value, working from the head to the tail.
+        this.find_node_with_value = function (value)
+        {
+
+            if (this.val === value) {
+                return this;
+            }
+            else if (this.next_node === null)
+            {
+                return null;
+            }
+            else
+            {
+                // Recursion. Note this is calling
+                // the instance method on next_node!
+                return this.next_node.find_node_with_value(value);
+            }
+
+        };
+
     };
 
     // The insert function:
@@ -63,6 +89,8 @@ function LinkedList()
 
     };
 
+    // Remove a Node from the LinkedList, return the Node's
+    // value, and stitch the LinkedList back together.
     this.pop = function()
     {
 
@@ -78,6 +106,27 @@ function LinkedList()
         this.deleted_node_count += 1;
 
         return value_to_return;
+
+    };
+
+    // Return the length of the LinkedList.
+    this.list_size = function()
+    {
+
+        return (this.created_node_count - this.deleted_node_count);
+
+    };
+
+    // Return the result of having this LinkedList's Nodes serially
+    // check themselves for the presence of a supplied value.
+    // If the value is not found, return null.
+    this.search = function(value) {
+
+        if (this.head === null) {
+            return null;
+        }
+
+        return this.head.find_node_with_value(value);
 
     };
 
@@ -109,23 +158,31 @@ console.log(new_linked_list);
 console.log(new_linked_list.head);
 console.log(new_linked_list.tail);
 
-console.log('\nnew_linked_list.pop();\n');
-returned_val = new_linked_list.pop();
-console.log(new_linked_list);
-console.log(new_linked_list.head);
-console.log(new_linked_list.tail);
-console.log(returned_val);
+// console.log('\nnew_linked_list.pop();\n');
+// returned_val = new_linked_list.pop();
+// console.log(new_linked_list);
+// console.log(new_linked_list.head);
+// console.log(new_linked_list.tail);
+// console.log(returned_val);
 
-console.log('\nnew_linked_list.pop();\n');
-returned_val = new_linked_list.pop();
-console.log(new_linked_list);
-console.log(new_linked_list.head);
-console.log(new_linked_list.tail);
-console.log(returned_val);
+// console.log('\nnew_linked_list.pop();\n');
+// returned_val = new_linked_list.pop();
+// console.log(new_linked_list);
+// console.log(new_linked_list.head);
+// console.log(new_linked_list.tail);
+// console.log(returned_val);
 
-console.log('\nnew_linked_list.pop();\n');
-returned_val = new_linked_list.pop();
-console.log(new_linked_list);
-console.log(new_linked_list.head);
-console.log(new_linked_list.tail);
-console.log(returned_val);
+// console.log('\nnew_linked_list.pop();\n');
+// returned_val = new_linked_list.pop();
+// console.log(new_linked_list);
+// console.log(new_linked_list.head);
+// console.log(new_linked_list.tail);
+// console.log(returned_val);
+
+console.log('\nnew_linked_list.search(6);\n');
+returned_node = new_linked_list.search(6);
+console.log(returned_node);
+
+console.log('\nnew_linked_list.search(\'six\');\n');
+returned_node = new_linked_list.search('six');
+console.log(returned_node);
