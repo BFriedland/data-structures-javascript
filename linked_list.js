@@ -46,7 +46,7 @@ function LinkedList()
         // This method recursively finds and returns the first
         // Node encountered in the LinkedList with the supplied
         // value, working from the head to the tail.
-        this.find_node_with_value = function (value)
+        this.find_node_with_value = function(value)
         {
 
             if (this.val === value) {
@@ -63,6 +63,11 @@ function LinkedList()
                 return this.next_node.find_node_with_value(value);
             }
 
+        };
+
+        this.toString = function()
+        {
+            return '[object Node: val = ' + this.val + ']';
         };
 
     };
@@ -120,7 +125,8 @@ function LinkedList()
     // Return the result of having this LinkedList's Nodes serially
     // check themselves for the presence of a supplied value.
     // If the value is not found, return null.
-    this.search = function(value) {
+    this.search = function(value)
+    {
 
         if (this.head === null)
         {
@@ -137,7 +143,8 @@ function LinkedList()
     // object that is in the chain (because
     // it checks node identity), which can
     // be obtained with the search method.
-    this.remove = function(node_to_remove) {
+    this.remove = function(node_to_remove)
+    {
 
         // Cancel the removal function if nothing is
         if (this.head === null)
@@ -188,7 +195,8 @@ function LinkedList()
 
     };
 
-    this.find_previous_node = function(node_to_find_previous_node_for) {
+    this.find_previous_node = function(node_to_find_previous_node_for)
+    {
 
         node_to_check = this.head;
 
@@ -211,6 +219,11 @@ function LinkedList()
 
         return node_to_check;
 
+    };
+
+    this.toString = function()
+    {
+    return '[object LinkedList: size = ' + this.list_size() + ']';
     };
 
 }
@@ -288,7 +301,7 @@ console.log('\nnew_linked_list.head.next_node.val = ' + new_linked_list.head.nex
 console.log('\nnew_linked_list.tail.val = ' + new_linked_list.tail.val + '\n');
 
 node_to_delete = new_linked_list.search(6);
-console.log('\nnode_to_delete =' + node_to_delete);
+console.log('\nnode_to_delete = ' + node_to_delete);
 
 console.log('\nnode_to_delete.next_node = ' + node_to_delete.next_node);
 attempted_node_search_results = new_linked_list.search(6);
