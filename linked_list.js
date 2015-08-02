@@ -63,6 +63,24 @@ function LinkedList()
 
     };
 
+    this.pop = function()
+    {
+
+        value_to_return = this.head.val;
+
+        this.head = this.head.next_node;
+
+        if (this.head === null)
+        {
+            this.tail = null;
+        }
+
+        this.deleted_node_count += 1;
+
+        return value_to_return;
+
+    };
+
 }
 
 // Rudimentary tests. I'm checking it with Node.
@@ -91,8 +109,23 @@ console.log(new_linked_list);
 console.log(new_linked_list.head);
 console.log(new_linked_list.tail);
 
-console.log('\nnew_linked_list.insert(8);\n');
-new_linked_list.insert(8);
+console.log('\nnew_linked_list.pop();\n');
+returned_val = new_linked_list.pop();
 console.log(new_linked_list);
 console.log(new_linked_list.head);
 console.log(new_linked_list.tail);
+console.log(returned_val);
+
+console.log('\nnew_linked_list.pop();\n');
+returned_val = new_linked_list.pop();
+console.log(new_linked_list);
+console.log(new_linked_list.head);
+console.log(new_linked_list.tail);
+console.log(returned_val);
+
+console.log('\nnew_linked_list.pop();\n');
+returned_val = new_linked_list.pop();
+console.log(new_linked_list);
+console.log(new_linked_list.head);
+console.log(new_linked_list.tail);
+console.log(returned_val);
