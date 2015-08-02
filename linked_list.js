@@ -122,7 +122,8 @@ function LinkedList()
     // If the value is not found, return null.
     this.search = function(value) {
 
-        if (this.head === null) {
+        if (this.head === null)
+        {
             return null;
         }
 
@@ -130,10 +131,96 @@ function LinkedList()
 
     };
 
+    // Remove a node from anywhere in the
+    // LinkedList and stitch the loose ends.
+    // This function must be handed a Node
+    // object that is in the chain (because
+    // it checks node identity), which can
+    // be obtained with the search method.
+    this.remove = function(node_to_remove) {
+
+        // Cancel the removal function if nothing is
+        if (this.head === null)
+        {
+            return null;
+        }
+
+        // Handling the stitch-the-chain-back-up case.
+        if ((node_to_remove != this.head) && (node_to_remove != this.tail))
+        {
+
+            // Since we've established this Node is connected
+            // to two other Nodes, we need access to the node
+            // in the LinkedList that has this Node in its
+            // next_node attribute. There is no previous_node
+            // attribute, because that would be a DoublyLinkedList.
+            previous_node = this.find_previous_node(node_to_remove);
+
+            // Reassignment of node references
+            // maintains the linked list property.
+            previous_node.next_node = node_to_remove.next_node;
+
+        }
+
+        else if (node_to_remove === this.tail)
+        {
+
+            previous_node = this.find_previous_node(node_to_remove);
+
+            previous_node.next_node = null;
+
+            this.tail = previous_node;
+
+        }
+
+        else if (node_to_remove === this.tail)
+        {
+
+            this.head = node_to_remove.next_node
+
+        }
+
+        // Cleaning the removed node's next_node
+        // prevents its erroneous use elsewhere.
+        node_to_remove.next_node = null;
+
+        this.deleted_node_count += 1;
+
+    };
+
+    this.find_previous_node = function(node_to_find_previous_node_for) {
+
+        node_to_check = this.head;
+
+        while (node_to_check.next_node != node_to_find_previous_node_for)
+        {
+
+            // This conditional catches cases
+            // where there's only a head node
+            // in the LinkedList as well as
+            // cases where the chain was
+            // improperly broken.
+            if (node_to_check.next_node === null)
+            {
+                return null;
+            }
+
+            node_to_check = node_to_check.next_node;
+
+        }
+
+        return node_to_check;
+
+    };
+
 }
 
 // Rudimentary tests. I'm checking it with Node.
+
+// Testing the LinkedList constructor:
 var new_linked_list = new LinkedList();
+
+// Initializing a LinkedList with insert:
 
 console.log('\nnew LinkedList();\n');
 console.log(new_linked_list);
@@ -158,12 +245,8 @@ console.log(new_linked_list);
 console.log(new_linked_list.head);
 console.log(new_linked_list.tail);
 
-// console.log('\nnew_linked_list.pop();\n');
-// returned_val = new_linked_list.pop();
-// console.log(new_linked_list);
-// console.log(new_linked_list.head);
-// console.log(new_linked_list.tail);
-// console.log(returned_val);
+
+// Testing LinkedList.pop:
 
 // console.log('\nnew_linked_list.pop();\n');
 // returned_val = new_linked_list.pop();
@@ -179,10 +262,46 @@ console.log(new_linked_list.tail);
 // console.log(new_linked_list.tail);
 // console.log(returned_val);
 
-console.log('\nnew_linked_list.search(6);\n');
-returned_node = new_linked_list.search(6);
-console.log(returned_node);
+// console.log('\nnew_linked_list.pop();\n');
+// returned_val = new_linked_list.pop();
+// console.log(new_linked_list);
+// console.log(new_linked_list.head);
+// console.log(new_linked_list.tail);
+// console.log(returned_val);
 
-console.log('\nnew_linked_list.search(\'six\');\n');
-returned_node = new_linked_list.search('six');
-console.log(returned_node);
+
+// Testing LinkedList.search:
+
+// console.log('\nnew_linked_list.search(6);\n');
+// returned_node = new_linked_list.search(6);
+// console.log(returned_node);
+
+// console.log('\nnew_linked_list.search(\'six\');\n');
+// returned_node = new_linked_list.search('six');
+// console.log(returned_node);
+
+
+// Testing LinkedList.remove:
+
+console.log('\nnew_linked_list.head.val = ' + new_linked_list.head.val);
+console.log('\nnew_linked_list.head.next_node.val = ' + new_linked_list.head.next_node.val);
+console.log('\nnew_linked_list.tail.val = ' + new_linked_list.tail.val + '\n');
+
+node_to_delete = new_linked_list.search(6);
+console.log('\nnode_to_delete =' + node_to_delete);
+
+console.log('\nnode_to_delete.next_node = ' + node_to_delete.next_node);
+attempted_node_search_results = new_linked_list.search(6);
+console.log('\nattempted_node_search_results = ' + attempted_node_search_results + '\n');
+
+
+console.log('new_linked_list.remove(node_to_delete);\n');
+new_linked_list.remove(node_to_delete);
+console.log('\nnew_linked_list = ' + new_linked_list);
+console.log('\nnode_to_delete.next_node = ' + node_to_delete.next_node);
+attempted_node_search_results = new_linked_list.search(6);
+console.log('\nattempted_node_search_results = ' + attempted_node_search_results + '\n');
+
+console.log('\nnew_linked_list.head.val = ' + new_linked_list.head.val);
+console.log('\nnew_linked_list.head.next_node.val = ' + new_linked_list.head.next_node.val);
+console.log('\nnew_linked_list.tail.val = ' + new_linked_list.tail.val + '\n');
