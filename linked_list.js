@@ -29,8 +29,6 @@ function LinkedList()
     this.created_node_count = 0;
     this.deleted_node_count = 0;
 
-
-
     // A namespaced constructor for LinkedList nodes, for slight privacy.
     // Must come before things that reference the Node constructor.
     // Note that this is, in fact, a constructor; it must be called
@@ -40,6 +38,28 @@ function LinkedList()
 
         this.val = null;
         this.next_node = null;
+
+    };
+
+    // The insert function:
+    // Add a Node to the head of the LinkedList and properly connect the chain.
+    this.insert = function(value)
+    {
+
+        new_node = new this.Node();
+
+        new_node.val = value;
+
+        new_node.next_node = this.head;
+
+        if (this.head === null)
+        {
+            this.tail = new_node;
+        }
+
+        this.head = new_node;
+
+        this.created_node_count += 1;
 
     };
 
@@ -76,5 +96,3 @@ new_linked_list.insert(8);
 console.log(new_linked_list);
 console.log(new_linked_list.head);
 console.log(new_linked_list.tail);
-
-
